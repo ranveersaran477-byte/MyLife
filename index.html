@@ -1,1 +1,63 @@
-{<video controls><source src="MyLife.mp4" type="video/mp4"></source></video>margin:0;padding:0;background:black;overflow:hidden;font-family:Arial} #reel{width:100vw;height:100vh;object-fit:cover} #popup,#pinPop{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);color:white;justify-content:center;align-items:center;flex-direction:column;z-index:10} #msg{font-size:35px} #btn,#connect{background:#00ff00;color:#fff;padding:12px 25px;border:none;margin-top:15px;cursor:pointer} #pinIn{width:200px;padding:10px;margin-top:10px;font-size:18px}        इंटरनेट डिसकनेक्टेड रिकनेक्ट   पिन डालो:  कनेक्ट   let r = document.getElementById('reel'); let popup = document.getElementById('popup'); let pinPop = document.getElementById('pinPop'); let btn = document.getElementById('btn'); let connect = document.getElementById('connect'); let pinIn = document.getElementById('pinIn'); let played = false; r.addEventListener('loadedmetadata', ()=>{ let thirtyP = r.duration 0.3; r.addEventListener('timeupdate', ()=>{ if(!played && r.currentTime >= thirtyP){ r.pause(); popup.style.display='flex'; } }); }); btn.onclick=()=>{ popup.style.display='none'; pinPop.style.display='flex'; }; connect.onclick=()=>{ let pin = pinIn.value.trim(); if(pin){ history.pushState({},,?pin=+pin); pinPop.style.display='none'; r.play(); played=true; r.loop=true; }else{ alert('पिन डालो!'); } };
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <title>रील चलाओ</title>
+    <style>
+        body { margin: 0; padding: 0; background: black; overflow: hidden; font-family: Arial; }
+        #reel { width: 100vw; height: 100vh; object-fit: cover; }
+        #popup, #pinPop { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); color: white; justify-content: center; align-items: center; flex-direction: column; z-index: 10; }
+        #msg { font-size: 35px; }
+        #btn, #connect { background: #00ff00; color: white; padding: 12px 25px; border: none; margin-top: 15px; font-size: 16px; cursor: pointer; }
+        #pinIn { width: 200px; padding: 10px; font-size: 18px; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <video id="reel" autoplay muted>
+        <source src="mylife.mp4" type="video/mp4">
+        <!-- अगर वीडियो नाम अलग है तो यहाँ बदल लो, या इमेज के लिए <img id="reel" src="mylife.jpg" style="width:100vw;height:100vh;object-fit:cover;"> कर लो -->
+    </video>
+    <div id="popup">
+        <div id="msg">इंटरनेट डिसकनेक्टेड</div>
+        <button id="btn">रिकनेक्ट</button>
+    </div>
+    <div id="pinPop">
+        <p>पिन डालो:</p>
+        <input id="pinIn" type="text" placeholder="पिन">
+        <button id="connect">कनेक्ट</button>
+    </div>
+    <script>
+        let r = document.getElementById('reel');
+        let popup = document.getElementById('popup');
+        let pinPop = document.getElementById('pinPop');
+        let btn = document.getElementById('btn');
+        let connect = document.getElementById('connect');
+        let pinIn = document.getElementById('pinIn');
+        let played = false;
+        r.addEventListener('loadedmetadata', function() {
+            let thirtyPercent = r.duration * 0.3;
+            r.addEventListener('timeupdate', function() {
+                if (!played && r.currentTime >= thirtyPercent) {
+                    r.pause();
+                    popup.style.display = 'flex';
+                }
+            });
+        });
+        btn.onclick = function() {
+            popup.style.display = 'none';
+            pinPop.style.display = 'flex';
+        };
+        connect.onclick = function() {
+            let pin = pinIn.value.trim();
+            if (pin) {
+                history.pushState({}, '', '?pin=' + pin);
+                pinPop.style.display = 'none';
+                r.play();
+                r.loop = true;
+                played = true;
+            } else {
+                alert('पिन डालो!');
+            }
+        };
+    </script>
+</body>
+  </html>
